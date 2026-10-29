@@ -4,7 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.sena.navigationcompose.ui.screens.home.HomeScreen
+
+import com.sena.navigationcompose.navigation.AppNavigation
 import com.sena.navigationcompose.ui.theme.NavigationComposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -15,14 +16,12 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
+
             NavigationComposeTheme {
-                HomeScreen(
-                    onVerLibros = {
-                        // Conectaremos la navegación en la siguiente etapa.
-                    }
-                )
+
+                AppNavigation()
+
             }
         }
     }
-
 }
