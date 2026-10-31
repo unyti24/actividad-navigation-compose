@@ -1,9 +1,6 @@
 package com.sena.navigationcompose.navigation
 
 object Routes {
-    fun detalleLibro(libroId: Int): String {
-        return "detalle_libro/$libroId"
-    }
 
     const val HOME = "home"
 
@@ -11,7 +8,7 @@ object Routes {
 
     const val DETALLE_LIBRO = "detalle_libro/{libroId}"
 
-    const val CONFIRMACION_RESERVA = "confirmacion_reserva"
+    const val CONFIRMACION_RESERVA = "confirmacion_reserva/{libroId}"
 
     const val MIS_RESERVAS = "mis_reservas"
 
@@ -20,4 +17,12 @@ object Routes {
     const val RENOVAR_RESERVA = "renovar_reserva"
 
     const val CONFIRMACION_RENOVACION = "confirmacion_renovacion"
+
+    fun detalleLibro(libroId: Int): String {
+        return "detalle_libro/$libroId"
+    }
+
+    fun confirmacionReserva(libroId: Int): String {
+        return "confirmacion_reserva/$libroId"
+    }
 }
