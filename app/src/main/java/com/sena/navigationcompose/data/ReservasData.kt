@@ -52,4 +52,23 @@ object ReservasData {
             )
         }
     }
+    fun renovarReserva(id: Int) {
+
+        val posicion = reservas.indexOfFirst {
+            it.id == id && it.estado == "Activa"
+        }
+
+        if (posicion != -1) {
+
+            val reservaActual = reservas[posicion]
+
+            val nuevaFecha = LocalDate
+                .parse(reservaActual.fechaDevolucion)
+                .plusDays(15)
+
+            reservas[posicion] = reservaActual.copy(
+                fechaDevolucion = nuevaFecha.toString()
+            )
+        }
+    }
 }
