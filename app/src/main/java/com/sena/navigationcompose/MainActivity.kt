@@ -11,7 +11,7 @@ import com.sena.navigationcompose.ui.theme.NavigationComposeTheme
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        super .onCreate(savedInstanceState)
 
         enableEdgeToEdge()
 

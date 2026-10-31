@@ -1,6 +1,9 @@
 package com.sena.navigationcompose.navigation
 
 object Routes {
+    fun detalleLibro(libroId: Int): String {
+        return "detalle_libro/$libroId"
+    }
 
     const val HOME = "home"
 
