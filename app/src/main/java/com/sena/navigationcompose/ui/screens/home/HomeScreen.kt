@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun HomeScreen(
     onVerLibros: () -> Unit,
+    onVerReservas: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Surface(
@@ -38,7 +39,6 @@ fun HomeScreen(
                 text = "📚",
                 fontSize = 76.sp
             )
-
 
             Spacer(modifier = Modifier.height(24.dp))
 
@@ -64,7 +64,14 @@ fun HomeScreen(
             ) {
                 Text(text = "📖  Ver libros")
             }
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            Button(
+                onClick = onVerReservas
+            ) {
+                Text(text = "📋  Mis reservas")
+            }
         }
     }
-
 }

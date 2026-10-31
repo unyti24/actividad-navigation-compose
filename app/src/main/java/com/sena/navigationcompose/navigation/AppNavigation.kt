@@ -6,13 +6,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-
+import com.sena.navigationcompose.data.ReservasData
 import com.sena.navigationcompose.data.LibrosData
 import com.sena.navigationcompose.ui.screens.home.HomeScreen
 import com.sena.navigationcompose.ui.screens.libros.ListaLibrosScreen
 import com.sena.navigationcompose.ui.screens.libros.DetalleLibroScreen
 import com.sena.navigationcompose.ui.screens.libros.ConfirmacionReservaScreen
-
+import com.sena.navigationcompose.ui.screens.reservas.MisReservasScreen
 @Composable
 fun AppNavigation() {
 
@@ -29,6 +29,9 @@ fun AppNavigation() {
             HomeScreen(
                 onVerLibros = {
                     navController.navigate(Routes.LISTA_LIBROS)
+                },
+                onVerReservas = {
+                    navController.navigate(Routes.MIS_RESERVAS)
                 }
             )
         }
@@ -68,6 +71,10 @@ fun AppNavigation() {
                     libro = libro,
                     onReservar = {
 
+                        // Registrar la reserva
+                        ReservasData.agregarReserva(libro)
+
+                        // Ir a la pantalla de confirmación
                         navController.navigate(
                             Routes.confirmacionReserva(libro.id)
                         )
@@ -107,6 +114,18 @@ fun AppNavigation() {
                     }
                 )
             }
+        }
+        // Pantalla de Mis reservas
+        composable(Routes.MIS_RESERVAS) {
+
+            MisReservasScreen(
+                onVerDetalle = { reservaId ->
+
+                    navController.navigate(
+                        "detalle_reserva/$reservaId"
+                    )
+                }
+            )
         }
     }
 }
