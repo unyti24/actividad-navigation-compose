@@ -4,6 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
+import com.sena.navigationcompose.data.LibrosData
+import com.sena.navigationcompose.ui.screens.libros.DetalleLibroScreen
 
 import com.sena.navigationcompose.ui.screens.home.HomeScreen
 import com.sena.navigationcompose.ui.screens.libros.ListaLibrosScreen
@@ -33,10 +37,37 @@ fun AppNavigation() {
 
             ListaLibrosScreen(
                 onVerDetalle = { libroId ->
-                    // Conectaremos el detalle del libro
-                    // cuando desarrollemos esa pantalla.
+
+                    navController.navigate(
+                        Routes.detalleLibro(libroId)
+                    )
                 }
             )
+        }
+        composable(
+            route = Routes.DETALLE_LIBRO,
+            arguments = listOf(
+                navArgument("libroId") {
+                    type = NavType.IntType
+                }
+            )
+        ) { backStackEntry ->
+
+            val libroId = backStackEntry.arguments?.getInt("libroId")
+
+            val libro = LibrosData.libros.find {
+                it.id == libroId
+            }
+
+            if (libro != null) {
+
+                DetalleLibroScreen(
+                    libro = libro,
+                    onReservar = {
+                        // Conectaremos la confirmación de reserva después.
+                    }
+                )
+            }
         }
     }
 }
