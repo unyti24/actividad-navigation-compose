@@ -155,7 +155,8 @@ fun AppNavigation() {
                         navController.navigate("renovar_reserva/${reserva.id}")
                     },
                     onCancelar = {
-                        // Más adelante conectaremos la cancelación
+                        ReservasData.cancelarReserva(reserva.id)
+                        navController.popBackStack()
                     },
                     onVolver = {
                         navController.popBackStack()

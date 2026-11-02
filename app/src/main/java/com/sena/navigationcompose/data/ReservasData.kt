@@ -3,10 +3,10 @@ package com.sena.navigationcompose.data
 import com.sena.navigationcompose.model.Libro
 import com.sena.navigationcompose.model.Reserva
 import java.time.LocalDate
-
+import androidx.compose.runtime.mutableStateListOf
 object ReservasData {
 
-    val reservas = mutableListOf<Reserva>()
+    val reservas = mutableStateListOf<Reserva>()
 
     private var siguienteId = 1
 
