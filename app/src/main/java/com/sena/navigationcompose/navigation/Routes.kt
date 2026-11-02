@@ -14,7 +14,7 @@ object Routes {
 
     const val DETALLE_RESERVA = "detalle_reserva/{reservaId}"
 
-    const val RENOVAR_RESERVA = "renovar_reserva"
+    const val RENOVAR_RESERVA = "renovar_reserva/{reservaId}"
 
     const val CONFIRMACION_RENOVACION = "confirmacion_renovacion"
 
@@ -24,5 +24,9 @@ object Routes {
 
     fun confirmacionReserva(libroId: Int): String {
         return "confirmacion_reserva/$libroId"
+    }
+
+    fun renovarReserva(reservaId: Int): String {
+        return "renovar_reserva/$reservaId"
     }
 }
