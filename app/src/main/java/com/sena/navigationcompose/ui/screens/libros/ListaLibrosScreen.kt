@@ -1,5 +1,6 @@
 package com.sena.navigationcompose.ui.screens.libros
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,86 +15,40 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Android
-import androidx.compose.material.icons.outlined.Architecture
-import androidx.compose.material.icons.outlined.Book
-import androidx.compose.material.icons.outlined.Code
-import androidx.compose.material.icons.outlined.MenuBook
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.sena.navigationcompose.model.Libro
+import com.sena.navigationcompose.data.LibrosData
 
-private data class LibroVisual(
-    val libro: Libro,
-    val icono: ImageVector,
-    val color: Color
-)
+private fun colorLibro(id: Int): Color {
+    return when (id) {
+        1 -> Color(0xFF29256B)
+        2 -> Color(0xFF43A047)
+        3 -> Color(0xFFEF8B16)
+        4 -> Color(0xFF00A5B5)
+        else -> Color.Gray
+    }
+}
 
 @Composable
 fun ListaLibrosScreen(
     onVerDetalle: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val libros = listOf(
-        LibroVisual(
-            libro = Libro(
-                id = 1,
-                nombre = "Clean Code",
-                autor = "Robert C. Martin",
-                categoria = "Programación",
-                descripcion = "Una guía para escribir código limpio, organizado y fácil de mantener."
-            ),
-            icono = Icons.Outlined.Code,
-            color = Color(0xFF29256B)
-        ),
-        LibroVisual(
-            libro = Libro(
-                id = 2,
-                nombre = "Kotlin para Android",
-                autor = "Desarrollo Android",
-                categoria = "Desarrollo móvil",
-                descripcion = "Conceptos y herramientas para desarrollar aplicaciones Android con Kotlin."
-            ),
-            icono = Icons.Outlined.Android,
-            color = Color(0xFF43A047)
-        ),
-        LibroVisual(
-            libro = Libro(
-                id = 3,
-                nombre = "Arquitectura de Software",
-                autor = "Autor de referencia",
-                categoria = "Arquitectura",
-                descripcion = "Principios para organizar y diseñar aplicaciones de software."
-            ),
-            icono = Icons.Outlined.Architecture,
-            color = Color(0xFFEF8B16)
-        ),
-        LibroVisual(
-            libro = Libro(
-                id = 4,
-                nombre = "Jetpack Compose",
-                autor = "Desarrollo Android",
-                categoria = "Interfaces móviles",
-                descripcion = "Introducción al desarrollo de interfaces modernas con Jetpack Compose."
-            ),
-            icono = Icons.Outlined.MenuBook,
-            color = Color(0xFF00A5B5)
-        )
-    )
 
+    val libros = LibrosData.libros
 
     Scaffold(
         modifier = modifier.fillMaxSize()
@@ -105,6 +60,7 @@ fun ListaLibrosScreen(
                 .padding(innerPadding)
                 .padding(horizontal = 20.dp, vertical = 16.dp)
         ) {
+
             Text(
                 text = "Mis Libros",
                 style = MaterialTheme.typography.headlineMedium,
@@ -124,7 +80,8 @@ fun ListaLibrosScreen(
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(14.dp)
             ) {
-                items(libros) { libroVisual ->
+
+                items(libros) { libro ->
 
                     Card(
                         modifier = Modifier.fillMaxWidth(),
@@ -136,26 +93,33 @@ fun ListaLibrosScreen(
                             defaultElevation = 3.dp
                         )
                     ) {
+
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(14.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
+
                             Box(
                                 modifier = Modifier
                                     .size(64.dp)
                                     .background(
-                                        color = libroVisual.color.copy(alpha = 0.12f),
+                                        color = colorLibro(libro.id).copy(alpha = 0.12f),
                                         shape = RoundedCornerShape(12.dp)
                                     ),
                                 contentAlignment = Alignment.Center
                             ) {
-                                Icon(
-                                    imageVector = libroVisual.icono,
-                                    contentDescription = "Icono de ${libroVisual.libro.nombre}",
-                                    tint = libroVisual.color,
-                                    modifier = Modifier.size(38.dp)
+
+                                Image(
+                                    painter = painterResource(
+                                        id = libro.imagen
+                                    ),
+                                    contentDescription = "Portada de ${libro.nombre}",
+                                    modifier = Modifier
+                                        .size(64.dp)
+                                        .clip(RoundedCornerShape(12.dp)),
+                                    contentScale = ContentScale.Crop
                                 )
                             }
 
@@ -164,8 +128,9 @@ fun ListaLibrosScreen(
                                     .weight(1f)
                                     .padding(horizontal = 12.dp)
                             ) {
+
                                 Text(
-                                    text = libroVisual.libro.nombre,
+                                    text = libro.nombre,
                                     style = MaterialTheme.typography.titleMedium,
                                     fontWeight = FontWeight.Bold
                                 )
@@ -173,7 +138,7 @@ fun ListaLibrosScreen(
                                 Spacer(modifier = Modifier.height(4.dp))
 
                                 Text(
-                                    text = libroVisual.libro.autor,
+                                    text = libro.autor,
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
@@ -181,25 +146,23 @@ fun ListaLibrosScreen(
                                 Spacer(modifier = Modifier.height(4.dp))
 
                                 Text(
-                                    text = libroVisual.libro.categoria,
+                                    text = libro.categoria,
                                     style = MaterialTheme.typography.labelSmall,
-                                    color = libroVisual.color
+                                    color = colorLibro(libro.id)
                                 )
                             }
 
                             Button(
                                 onClick = {
-                                    onVerDetalle(libroVisual.libro.id)
+                                    onVerDetalle(libro.id)
                                 }
                             ) {
-                                Text(text = "Ver detalle")
+                                Text("Ver detalle")
                             }
                         }
                     }
                 }
             }
         }
-
     }
-
 }
